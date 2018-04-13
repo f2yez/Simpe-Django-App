@@ -1,6 +1,6 @@
 # Simpe Django App
 
-> A Vue.js project
+> A Django project
 
 * This App contains on:
   1. CRUD Actions
