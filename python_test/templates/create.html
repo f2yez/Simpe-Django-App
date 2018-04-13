@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebIT Django assessment</title>
+  </head>
+  <style>
+
+  #create-client-area {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  a {
+    color: #4CAF50;
+  }
+  #create-client-area, h2 {
+    width: 50%;
+    margin: auto;
+  }
+  .input-area{
+    margin-bottom: 16px;
+  }
+  input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  label > span {
+    color: red;
+  }
+  .success-alert {
+    padding: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    width: 50%;
+    margin: auto;
+  }
+
+  </style>
+  <body>
+    <h2>
+      {% if action == 'edit' %}
+        Update Client Info
+      {% else %}
+        Create new Client
+      {% endif %}
+      | <a href="/client">All clients List</a>
+    </h2>
+    <br/>
+
+    {% if success %}
+      <div class="success-alert">{{success}}</div>
+      <br/>
+    {% endif %}
+    <div id="create-client-area">
+      <form method="post" action="{% if action == 'edit' %}/client/edit/{{client.id}}{% else %}create{% endif %}">
+        <div class="input-area">
+          <label for="client_name">Client Name <span>*</span></label>
+          <input value="{{client.client_name}}" type="text" id="client_name" name="client_name" placeholder="Enter Client Name...">
+          {% for error in errors.client_name %}
+            <span style="color: red">{{ error.message }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="input-area">
+          <label for="address">Address</label>
+          <input value="{{client.address}}" type="text" id="address" name="address" placeholder="Enter Full Address...">
+          {% for error in errors.address %}
+            <span style="color: red">{{ error.message }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="input-area">
+          <label for="contact_name">Contact Name</label>
+          <input value="{{client.contact_name}}" type="text" id="contact_name" name="contact_name" placeholder="Enter Contact Name...">
+          {% for error in errors.contact_name %}
+            <span style="color: red">{{ error.message }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="input-area">
+          <label for="email">Email Address <span>*</span></label>
+          <input value="{{client.email}}" type="text" id="email" name="email" placeholder="Enter Email Address...">
+          {% for error in errors.email %}
+            <span style="color: red">{{ error.message }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="input-area">
+          <label for="phone_number">Phone Number <span>*</span></label>
+          <input value="{{client.phone_number}}" type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number...">
+          {% for error in errors.phone_number %}
+            <span style="color: red">{{ error.message }}</span>
+          {% endfor %}
+        </div>
+
+        <input type="submit" value="Submit">
+        {% csrf_token %}
+      </form>
+    </div>
+
+  </body>
+</html>

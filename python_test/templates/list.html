@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    .list-clients-area {
+      width: 50%;
+      margin: auto;
+    }
+    table {
+      width: 100%;
+        border-collapse: collapse;
+    }
+    .filter-area {
+      margin-bottom: 16px;
+    }
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    a {
+      color: #4CAF50;
+    }
+    .empty-row td{
+      text-align: center;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    select, input[type=text] {
+        display: inline-block;
+        border: none;
+        border-radius: 4px;
+        background-color: #f1f1f1;
+        padding: 16px 20px;
+        font-size: 16px;
+    }
+    input[type=text] {
+      width: 30%;
+    }
+    input[type=submit] {
+        padding: 16px 20px;
+        background-color: #4CAF50;
+        display: inline-block;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    #search_by {
+      width: 25%;
+    }
+    tr:nth-child(even) {
+      background-color: #f3f3f3
+    }
+    </style>
+  </head>
+  <body>
+
+  <div class="list-clients-area">
+    <h2>All clients List | <a href="/client/create">Create Client</a></h2>
+    <div class="filter-area">
+      <form action="./">
+        <select id="search_by" name="search_by">
+          <option value="">Search By</option>
+          <option value="client_name" {% if request.GET.search_by == 'client_name' %} selected="selected" {% endif %} >Client name</option>
+          <option value="email" {% if request.GET.search_by == 'email' %} selected="selected" {% endif %}>Email address</option>
+          <option value="phone_number" {% if request.GET.search_by == 'phone_number' %} selected="selected" {% endif %}>Phone number</option>
+          <option value="address" {% if request.GET.search_by == 'address' %} selected="selected" {% endif %}>Client suburb</option>
+        </select>
+        <input type="text" id="keywords" name="keywords" placeholder="Search Keywords..." value="{{request.GET.keywords}}">
+        <select id="order_by" name="order_by">
+          <option value="">Order By</option>
+          <option value="client_name" {% if request.GET.order_by == 'client_name' %} selected="selected" {% endif %}>Client name</option>
+          <option value="email" {% if request.GET.order_by == 'email' %} selected="selected" {% endif %}>Email address</option>
+          <option value="phone_number" {% if request.GET.order_by == 'phone_number' %} selected="selected" {% endif %}>Phone number</option>
+          <option value="address" {% if request.GET.order_by == 'address' %} selected="selected" {% endif %}>Client suburb</option>
+        </select>
+        <input type="submit" value="Filter">
+      </form>
+    </div>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Action</th>
+      </tr>
+      {% if clients%}
+        {% for client in clients %}
+        <tr>
+          <td>{{client.client_name}}</td>
+          <td>{{client.address}}</td>
+          <td>{{client.email}}</td>
+          <td>{{client.phone_number}}</td>
+          <td><a href="/client/edit/{{client.id}}">Edit</a></td>
+        </tr>
+        {% endfor %}
+      {% else %}
+          <tr class="empty-row">
+            <td colspan="5">No data</td>
+          </tr>
+      {% endif %}
+    </table>
+  </div>
+  </body>
+</html>
